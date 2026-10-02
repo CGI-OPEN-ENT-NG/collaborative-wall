@@ -109,6 +109,16 @@ publish() {
   fi
 }
 
+publishNexus() {
+  version=`docker compose run --rm maven mvn $MVN_OPTS help:evaluate -Dexpression=project.version -q -DforceStdout`
+  case "$version" in
+    *SNAPSHOT) export nexusRepository='snapshots' ;;
+    *)         export nexusRepository='releases' ;;
+  esac
+
+  docker compose run --rm  maven mvn $MVN_OPTS -DaltDeploymentRepository=cgi-maven-$nexusRepository::default::https://nexus-pic2.support-ent.fr/repository/cgi-maven-$nexusRepository/ -DskipTests -Dmaven.test.skip=true --settings /var/maven/.m2/settings.xml deploy
+}
+
 watch () {
   docker compose run --rm -u "$USER_UID:$GROUP_GID" node sh -c "node_modules/gulp/bin/gulp.js watch --springboard=/home/node/$SPRINGBOARD"
 }
@@ -130,6 +140,9 @@ do
       ;;
     publish)
       publish
+      ;;
+    publishNexus)
+      publishNexus
       ;;
     *)
       echo "Invalid argument : $param"
