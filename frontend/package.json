@@ -39,8 +39,8 @@
     ]
   },
   "dependencies": {
-    "@edifice.io/react": "develop",
-    "@edifice.io/bootstrap": "develop",
+    "@edifice.io/react": "npm:@cgi-learning-hub/edifice-react@2.6.11-campus",
+    "@edifice.io/bootstrap": "npm:@cgi-learning-hub/edifice-bootstrap@2.6.11-campus",
     "@edifice.io/client": "develop",
     "@mantine/hooks": "7.7.1",
     "@react-spring/web": "9.7.5",
@@ -95,5 +95,11 @@
   "engines": {
     "node": "18 || 20"
   },
-  "nx": {}
+  "nx": {},
+  "pnpm": {
+    "overrides": {
+      "@edifice.io/bootstrap": "npm:@cgi-learning-hub/edifice-bootstrap@2.6.11-campus",
+      "@edifice.io/react": "npm:@cgi-learning-hub/edifice-react@2.6.11-campus"
+    }
+  }
 }
